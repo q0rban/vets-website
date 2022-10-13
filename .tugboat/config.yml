@@ -1,0 +1,11 @@
+services:
+  node:
+    image: tugboatqa/node:14
+    default: true
+    expose: 3001
+    commands:
+      build:
+        - yarn
+        # yarn build has 8192 memory hard-coded. We reduce that so that it can run
+        # on Tugboat.
+        - NODE_OPTIONS=--max-old-space-size=2048 yarn webpack --config config/webpack.config.js --env buildtype=vagovstaging
